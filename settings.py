@@ -21,8 +21,8 @@ from pygame.math import Vector2
 
 # @STUDENT-EDIT-Day1-3: Change the game window size
 # The width of the screen is 1920 pixels
-SCREEN_WIDTH = 1440  # Width of game window in pixels (Default: 1280)
-SCREEN_HEIGHT = 720  # Height of game window in pixels (Default: 720)
+SCREEN_WIDTH = 144  # Width of game window in pixels (Default: 1280)
+SCREEN_HEIGHT = 100  # Height of game window in pixels (Default: 720)
 # @STUDENT-EDIT-Day1-2: Customize the game window title (TITLE)
 TITLE = "Really cool python learning game"  # Game window title text (Default: "PyDew Valley: GAIC 26")
 # @STUDENT-EDIT-Day1-4: Experiment with different background colors
@@ -35,6 +35,7 @@ TILE_SIZE = 64  # Size of each tile in our game world (pixels) (Default: 64)
 # Try changing the screen size and see how these change too.
 SCREEN_CENTER_X = SCREEN_WIDTH / 2   # float: horizontal middle of the screen
 SCREEN_CENTER_Y = SCREEN_HEIGHT / 2  # float: vertical middle of the screen
+print(SCREEN_CENTER_X)  # Print the center coordinates to the console
 
 # @STUDENT-EDIT-Day1-10: Every value has a TYPE. Try adding a line like
 # print(type(SCREEN_WIDTH))     -> int   (a whole number)
