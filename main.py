@@ -99,9 +99,13 @@ class Game:
         # It will be created later when start_game() is called if camera is enabled
 
         # @STUDENT-EDIT-Day1-5: Insert a print("Game starting!") statement here to see when the game starts
+        print("Game starting!")
         # @STUDENT-EDIT-Day1-6: Combine text AND a variable using an f-string (note the
         # f before the opening quote). Try adding: print(f"Welcome to {TITLE}!")
         # The {TITLE} part gets replaced with the value of TITLE from settings.py.
+        print(f"Welcome to {TITLE}!")
+        favorite_game = "PyDew Valley"  # Set your favorite game
+        print(favorite_game)  # Print the favorite game to the console
 
     def show_loading_screen(self, message="Loading...", delay_ms=250):
         """Display a loading screen with game title and animated loading bar."""
@@ -298,3 +302,4 @@ if __name__ == "__main__":
     """
     game = Game()  # Create a new Game instance
     game.run()  # Start the main game loop
+
