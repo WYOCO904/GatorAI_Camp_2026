@@ -21,8 +21,8 @@ from pygame.math import Vector2
 
 # @STUDENT-EDIT-Day1-3: Change the game window size
 # The width of the screen is 1920 pixels
-SCREEN_WIDTH = 144  # Width of game window in pixels (Default: 1280)
-SCREEN_HEIGHT = 100  # Height of game window in pixels (Default: 720)
+SCREEN_WIDTH = 1920  # Width of game window in pixels (Default: 1280)
+SCREEN_HEIGHT = 1080  # Height of game window in pixels (Default: 720)
 # @STUDENT-EDIT-Day1-2: Customize the game window title (TITLE)
 TITLE = "Really cool python learning game"  # Game window title text (Default: "PyDew Valley: GAIC 26")
 # @STUDENT-EDIT-Day1-4: Experiment with different background colors
@@ -173,6 +173,15 @@ NPC_DATA = {
         "dialogue": [
             "Hi there! Welcome to PyDew Valley!",
             "I'm Robin, a helper NPC created using Python classes.",
+            "Try editing settings.py to change what I say, or create your own custom NPC!"
+        ]  # Default starter dialogue lines
+    },
+    "WYOCO": {
+        "pos": (700, 400),  # Default spawn position
+        "graphic": "graphics/objects/merchant2.png",  # Placeholder using existing asset (Default: "graphics/objects/merchant.png")
+        "dialogue": [
+            "Hi there! Welcome to PyDew Valley!",
+            "I'm WYOCO, a helper NPC created using Python classes.",
             "Try editing settings.py to change what I say, or create your own custom NPC!"
         ]  # Default starter dialogue lines
     }
