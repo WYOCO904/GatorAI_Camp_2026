@@ -131,7 +131,7 @@ GROW_SPEED = {
 DAY_GROWTH = 10  # Growth added after sleeping one day (Default: 10)
 
 # @STUDENT-EDIT-Day2-2: Change the player's movement speed (PLAYER_SPEED)
-PLAYER_SPEED = 1000  # Player movement speed (Default: 200)
+PLAYER_SPEED = 9999  # Player movement speed (Default: 200)
 
 # =============================================================================
 # ECONOMIC SYSTEM - PRICES AND VALUES
@@ -177,12 +177,12 @@ NPC_DATA = {
         ]  # Default starter dialogue lines
     },
     "WYOCO": {
-        "pos": (700, 400),  # Default spawn position
+        "pos": (900, 1000),  # Default spawn position
         "graphic": "graphics/objects/merchant2.png",  # Placeholder using existing asset (Default: "graphics/objects/merchant.png")
         "dialogue": [
             "Hi there! Welcome to PyDew Valley!",
             "I'm WYOCO, a helper NPC created using Python classes.",
-            "Try editing settings.py to change what I say, or create your own custom NPC!"
+            "I am a green slime merchant, and I sell all sorts of goods to help you on your farming journey.",
         ]  # Default starter dialogue lines
     }
 }

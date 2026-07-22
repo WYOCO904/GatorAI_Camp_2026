@@ -108,11 +108,13 @@ class DialogueSystem:
         # @STUDENT-EDIT-Day5-3: Try loading custom dialogue from a text file here instead of hardcoding it
         # @STUDENT-EDIT-Day3-1: Add a new greeting string to this dialogue dictionary
         fallbacks = {
-            "trader": "Welcome, friend! I have many fine goods for a hardworking farmer like you. Let's see what you need."
+            "trader": "Welcome, friend! I have many luxurious goods for a hardworking farmer like you. Let's see what you need.",
+            "WYOCO": "Greetings! I'm WYOCO, your friendly neighborhood merchant. How can I assist you today?",
         }
         # @STUDENT-EDIT-Day3-2: Create a branching dialogue option using nested lists/dictionaries
         # @STUDENT-EDIT-Day3-3: Add a dialogue choice that ends the conversation early (self.active = False)
-        return fallbacks.get(character_id, "Hello there! Nice day for farming.")
+        self.active = False
+        return fallbacks.get(character_id, "Nice Weather wer're having, isn't it?")
 
     def _wrap_text(self, text, max_width):
         """Wraps text to fit within a given width and returns lines that fit in the dialogue box."""
