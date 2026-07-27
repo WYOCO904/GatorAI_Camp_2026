@@ -374,7 +374,7 @@ class Level:
         if events is None:
             events = []
 
-        # Handle ESC key for shop/teleporter closure
+        # Handle ESC key for shop closure
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE and self.shop_active:
