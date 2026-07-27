@@ -33,11 +33,6 @@ from trader_menu import TraderMenu
 import game_settings
 import os
 from dialogue_system import DialogueSystem
-from trader_menu import TraderMenu
-from teleporter_menu import TeleporterMenu  # Add this line
-import game_settings
-import os
-from dialogue_system import DialogueSystem
 
 
 class Level:
@@ -89,20 +84,10 @@ class Level:
         self.soil_layer.raining = self.raining  # Tell soil system about rain
         self.sky = Sky()  # Day/night color overlay
 
-                # SHOP AND DIALOGUE SYSTEM - trading menu plus the dialogue box
+        # SHOP AND DIALOGUE SYSTEM - trading menu plus the dialogue box
         self.menu = TraderMenu(self.player, self.open_trader_menu)
         self.shop_active = False
-        self.teleporter_menu = TeleporterMenu(self.player, self.close_teleporter_menu)  # Add this
-        self.teleporter_active = False  # Add this
         self.dialogue_system = DialogueSystem()
-
-        # In the __init__ method, add after the trader menu setup:
-        from teleporter_menu import TeleporterMenu
-
-        self.menu = TraderMenu(self.player, self.open_trader_menu)
-        self.teleporter_menu = TeleporterMenu(self.player, self.close_teleporter_menu)  # Add this
-        self.shop_active = False
-        self.teleporter_active = False  # Add this
 
         # AUDIO SYSTEM
         # Load and set up game sounds and music
@@ -194,8 +179,6 @@ class Level:
                     trigger_dialogue=self.trigger_npc_dialogue,
                     shake_camera=self.shake_camera,
                 )
-
-                self.player.open_teleporter = self.open_teleporter_menu
 
             if obj.name == "Bed":
                 # Create bed interaction area for sleeping
@@ -305,18 +288,6 @@ class Level:
         """Open the trading interface (called after the trader's greeting finishes)."""
         self.shop_active = True
 
-    def open_teleporter_menu(self):
-        """Open the teleporter menu."""
-        self.teleporter_active = True
-
-    def close_teleporter_menu(self):
-         """Close the teleporter menu."""
-         self.teleporter_active = False
-
-    def open_teleporter_menu(self):
-         """Open the teleporter menu."""
-         self.teleporter_active = True
-
     def reset(self):
         """Start a new day after sleeping: grow plants, reroll weather, refresh trees."""
         # Reset plant growth in the soil system
@@ -385,7 +356,6 @@ class Level:
             self.all_sprites.shake_timer -= dt
 
         # GAME LOGIC UPDATES - Priority order is important!
-                # GAME LOGIC UPDATES - Priority order is important!
         if self.dialogue_system.active:
             # If dialogue is active, only update dialogue logic and consume events
             if events:
@@ -394,8 +364,6 @@ class Level:
         elif self.shop_active:
             # If shop is open, only update the shop menu
             self.menu.update()
-        elif self.teleporter_active:  # Add this
-            self.teleporter_menu.update()
         else:
             # Normal gameplay updates
             self.all_sprites.update(dt)
@@ -416,13 +384,8 @@ class Level:
     def display(self):
         """Draw the world, then any active UI (dialogue/shop), overlay, sky, and transition."""
         # RENDERING - Draw the world
-        # Draw active interface elements on top of the world
-        if self.dialogue_system.active:
-             self.dialogue_system.draw()
-        elif self.shop_active:
-             self.menu.display()
-        elif self.teleporter_active:  # Add this
-             self.teleporter_menu.display()
+        self.display_surface.fill("black")
+        self.all_sprites.custom_draw(self.player)
 
         # Draw active interface elements on top of the world
         if self.dialogue_system.active:
