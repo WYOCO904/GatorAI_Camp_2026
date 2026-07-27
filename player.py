@@ -279,11 +279,21 @@ class Player(pygame.sprite.Sprite):
                         else:  # bed -> sleep
                             self.status = "left_idle"
                             self.sleep = True
+            
+            # CELEBRATION ACTION - trigger special animation
             if keys[pygame.K_f] and not self.timers["action"].active:
                 self.timers["action"].activate()
                 self.direction = pygame.math.Vector2() 
                 self.frame_index = 0
+            
+            # TELEPORTER MENU - Open teleporter (T key)
+            if keys[pygame.K_t] and not self.timers["action"].active:
+                self.timers["action"].activate()
+                self.direction = pygame.math.Vector2()
+                self.teleport_menu()
+
     def get_status(self):
+        """Update the player's animation status based on current action."""
         if self.timers["action"].active:
             self.status = self.status.split("_")[0] + "_celebrate"
             return
@@ -293,6 +303,12 @@ class Player(pygame.sprite.Sprite):
 
         if self.timers["tool use"].active:
             self.status = self.status.split("_")[0] + "_" + self.selected_tool
+
+    def teleport_menu(self):
+        """Placeholder - will be called from level."""
+        # This will be set by the level during initialization
+        if hasattr(self, 'open_teleporter'):
+            self.open_teleporter()
 
     def update_timers(self):
         """Tick every timer so its cooldown counts down."""
@@ -346,9 +362,6 @@ class Player(pygame.sprite.Sprite):
             self.pos.y = 0
         if self.pos.x < 0:
             self.pos.x = 0
-        
-        
-            
 
     def update(self, dt):
         """Run one frame of the player: input -> status -> timers -> aim -> move -> animate."""
