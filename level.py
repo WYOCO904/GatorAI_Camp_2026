@@ -30,7 +30,11 @@ from soil import SoilLayer
 from sky import Rain, Sky
 from random import randint
 from trader_menu import TraderMenu
-from teleporter_menu import TeleporterMenu
+import game_settings
+import os
+from dialogue_system import DialogueSystem
+from trader_menu import TraderMenu
+from teleporter_menu import TeleporterMenu  # Add this line
 import game_settings
 import os
 from dialogue_system import DialogueSystem
@@ -85,12 +89,20 @@ class Level:
         self.soil_layer.raining = self.raining  # Tell soil system about rain
         self.sky = Sky()  # Day/night color overlay
 
-        # SHOP AND DIALOGUE SYSTEM - trading menu plus the dialogue box
+                # SHOP AND DIALOGUE SYSTEM - trading menu plus the dialogue box
         self.menu = TraderMenu(self.player, self.open_trader_menu)
         self.shop_active = False
-        self.teleporter_menu = TeleporterMenu(self.player, self.close_teleporter_menu)
-        self.teleporter_active = False
+        self.teleporter_menu = TeleporterMenu(self.player, self.close_teleporter_menu)  # Add this
+        self.teleporter_active = False  # Add this
         self.dialogue_system = DialogueSystem()
+
+        # In the __init__ method, add after the trader menu setup:
+        from teleporter_menu import TeleporterMenu
+
+        self.menu = TraderMenu(self.player, self.open_trader_menu)
+        self.teleporter_menu = TeleporterMenu(self.player, self.close_teleporter_menu)  # Add this
+        self.shop_active = False
+        self.teleporter_active = False  # Add this
 
         # AUDIO SYSTEM
         # Load and set up game sounds and music
@@ -298,8 +310,12 @@ class Level:
         self.teleporter_active = True
 
     def close_teleporter_menu(self):
-        """Close the teleporter menu."""
-        self.teleporter_active = False
+         """Close the teleporter menu."""
+         self.teleporter_active = False
+
+    def open_teleporter_menu(self):
+         """Open the teleporter menu."""
+         self.teleporter_active = True
 
     def reset(self):
         """Start a new day after sleeping: grow plants, reroll weather, refresh trees."""
@@ -353,7 +369,7 @@ class Level:
     def run(self, dt, events=None):
         """Update one frame. `dt` is seconds since last frame; `events` is this frame's input.
 
-        Only one of dialogue / shop / teleporter / normal gameplay updates at a time (priority order).
+        Only one of dialogue / shop / normal gameplay updates at a time (priority order).
         """
         if events is None:
             events = []
@@ -363,14 +379,13 @@ class Level:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE and self.shop_active:
                     self.shop_active = False
-                if event.key == pygame.K_ESCAPE and self.teleporter_active:
-                    self.teleporter_active = False
 
         # Update camera shake
         if self.all_sprites.shake_timer > 0:
             self.all_sprites.shake_timer -= dt
 
         # GAME LOGIC UPDATES - Priority order is important!
+                # GAME LOGIC UPDATES - Priority order is important!
         if self.dialogue_system.active:
             # If dialogue is active, only update dialogue logic and consume events
             if events:
@@ -379,8 +394,7 @@ class Level:
         elif self.shop_active:
             # If shop is open, only update the shop menu
             self.menu.update()
-        elif self.teleporter_active:
-            # If teleporter is active, only update the teleporter menu
+        elif self.teleporter_active:  # Add this
             self.teleporter_menu.update()
         else:
             # Normal gameplay updates
@@ -389,7 +403,7 @@ class Level:
             self.soil_layer.update_plants(dt)
 
         # Weather effects (only during normal gameplay)
-        if self.raining and not self.shop_active and not self.dialogue_system.active and not self.teleporter_active:
+        if self.raining and not self.shop_active and not self.dialogue_system.active:
             self.rain.update()
 
         # Sky color transitions (day/night cycle)
@@ -400,18 +414,21 @@ class Level:
             self.transition.update()
 
     def display(self):
-        """Draw the world, then any active UI (dialogue/shop/teleporter), overlay, sky, and transition."""
+        """Draw the world, then any active UI (dialogue/shop), overlay, sky, and transition."""
         # RENDERING - Draw the world
-        self.display_surface.fill("black")
-        self.all_sprites.custom_draw(self.player)
+        # Draw active interface elements on top of the world
+        if self.dialogue_system.active:
+             self.dialogue_system.draw()
+        elif self.shop_active:
+             self.menu.display()
+        elif self.teleporter_active:  # Add this
+             self.teleporter_menu.display()
 
         # Draw active interface elements on top of the world
         if self.dialogue_system.active:
             self.dialogue_system.draw()
         elif self.shop_active:
             self.menu.display()
-        elif self.teleporter_active:
-            self.teleporter_menu.display()
 
         # UI AND VISUAL EFFECTS
         self.overlay.display()
