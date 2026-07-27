@@ -182,7 +182,7 @@ class Level:
                     trigger_dialogue=self.trigger_npc_dialogue,
                     shake_camera=self.shake_camera,
                 )
-
+                # Connect the teleporter callback
                 self.player.open_teleporter = self.open_teleporter_menu
 
             if obj.name == "Bed":
