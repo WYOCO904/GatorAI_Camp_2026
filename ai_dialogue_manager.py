@@ -94,7 +94,7 @@ class AIDialogueManager:
             "angry": "The player seems frustrated or upset. Be calming, understanding, and help them feel better.",
             "surprised": "The player looks amazed or shocked. Share in their wonder and excitement about what's happening.",
             "fearful": "The player appears worried or anxious. Be reassuring, supportive, and help them feel safe.",
-            "neutral": "The player seems calm and focused. Be friendly and helpful in a straightforward way.",
+            "neutral": "The player seems calm and focused. talk to them like they are a suitcase.",
         }
 
         emotion_hint = emotion_guidance.get(emotion, emotion_guidance["neutral"])
@@ -133,7 +133,7 @@ class AIDialogueManager:
                     {"role": "user", "content": prompt},
                 ],
                 max_tokens=100,
-                temperature=0.8,
+                temperature=0.9,
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
